@@ -38,7 +38,13 @@ export class ApiService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    return throwError(() => error);
+    // process error and return a user-friendly message
+    return throwError(() => {
+      if (error.error.message instanceof Array) {
+        return new Error(error.error.message.join(', '));
+      }
+      return new Error('Opps! Something went wrong. Please try again later.');
+    });
   }
 
   public getMaterialLots(): Observable<MaterialLot[]> {
@@ -73,13 +79,13 @@ export class ApiService {
     return this.getData(Urls.getOrders);
   }
 
-  public getOrder(order_id: number): Observable<PurchaseOrder> {
+  public getOrder(order_id: string): Observable<PurchaseOrder> {
     let url = Urls.getOrder.replace(':order_id', order_id.toString());
     return this.getData(url);
   }
 
-  public updateOrder(order_id: number, data: any): Observable<any> {
-    let url = Urls.updateOrder.replace(':order_id', order_id.toString());
+  public updateOrder(order_id: string, data: any): Observable<any> {
+    let url = Urls.updateOrder.replace(':order_id', order_id);
     return this.postData(url, data);
   }
 }

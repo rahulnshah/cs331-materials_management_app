@@ -1,7 +1,7 @@
 export interface PurchaseOrder {
-  order_id: number;
+  order_id: string;
   name: string;
-  lot_number: number;
+  lot_number: string;
   quantity: number;
   unit_price: number;
   order_date: string;
@@ -9,6 +9,6 @@ export interface PurchaseOrder {
 }
 
 export interface MaterialLot {
-  lot_number: number;
+  lot_number: string;
   material_id: string;
 }
