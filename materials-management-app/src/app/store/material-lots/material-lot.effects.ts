@@ -18,6 +18,7 @@ import {
   updateMaterialLotFailure,
 } from './material-lot.actions';
 import { ApiService } from '../../core/services/api.service';
+import { MaterialLot } from '../../models/model';
 
 @Injectable()
 export class MaterialLotEffects {
@@ -26,7 +27,7 @@ export class MaterialLotEffects {
       ofType(loadMaterialLots),
       switchMap(() =>
         this.apiService.getMaterialLots().pipe(
-          map((materialLots) => loadMaterialLotsSuccess({ materialLots })),
+          map((response: MaterialLot[]) => loadMaterialLotsSuccess({ materialLots: response })),
           catchError((error: Error) => of(loadMaterialLotsFailure({ error: error.message }))),
         ),
       ),

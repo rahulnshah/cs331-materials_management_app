@@ -24,6 +24,7 @@ export const materialLotReducer = createReducer(
     loading: true,
     loaded: false,
     error: null,
+    successMessage: null,
   })),
   on(loadMaterialLotsSuccess, (state, action) => ({
     ...state,
