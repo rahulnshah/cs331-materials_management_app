@@ -79,6 +79,10 @@ export class ApiService {
     return this.getData(Urls.getOrders);
   }
 
+  public addOrder(data: any): Observable<any> {
+    return this.postData(Urls.addOrder, data);
+  }
+
   public getOrder(order_id: string): Observable<PurchaseOrder> {
     let url = Urls.getOrder.replace(':order_id', order_id.toString());
     return this.getData(url);
@@ -87,5 +91,10 @@ export class ApiService {
   public updateOrder(order_id: string, data: any): Observable<any> {
     let url = Urls.updateOrder.replace(':order_id', order_id);
     return this.postData(url, data);
+  }
+
+  public deleteOrder(order_id: string): Observable<any> {
+    let url = Urls.deleteOrder.replace(':order_id', order_id);
+    return this.deleteData(url);
   }
 }
