@@ -9,6 +9,7 @@ export class Urls {
 
   static getOrders = '/orders';
   static getOrder = '/orders/:order_id';
+  static addOrder = '/orders';
   static updateOrder = '/orders/:order_id';
   static deleteOrder = '/orders/:order_id';
 }
