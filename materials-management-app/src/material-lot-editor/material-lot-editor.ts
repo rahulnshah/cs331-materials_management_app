@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import {
   addMaterialLot,
+  deleteMaterialLot,
   loadMaterialLots,
   selectMaterialLot,
   updateMaterialLot,
@@ -11,6 +12,8 @@ import {
 import { MaterialLot } from '../app/models/model';
 import {
   selectAllMaterialLots,
+  selectMaterialLotError,
+  selectMaterialLotSuccessMessage,
   selectSelectedMaterialLot,
 } from '../app/store/material-lots/material-lot.selectors';
 
@@ -33,6 +36,8 @@ export class MaterialLotEditor implements OnInit {
 
   materialLot$ = this.materialLotStore.select(selectSelectedMaterialLot);
   materialLots$ = this.materialLotStore.select(selectAllMaterialLots);
+  materialLotSuccessMessage$ = this.materialLotStore.select(selectMaterialLotSuccessMessage);
+  materialLotError$ = this.materialLotStore.select(selectMaterialLotError);
 
   ngOnInit() {
     this.materialLotStore.dispatch(loadMaterialLots());
@@ -74,5 +79,10 @@ export class MaterialLotEditor implements OnInit {
         },
       }),
     );
+  }
+
+  onDelete(materialLot: MaterialLot) {
+    // Implement delete functionality here
+    this.materialLotStore.dispatch(deleteMaterialLot({ lot_number: materialLot.lot_number }));
   }
 }

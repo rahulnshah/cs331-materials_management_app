@@ -28,6 +28,15 @@ export class ApiService {
     );
   }
 
+  public updateData(apiUrl: string, data: any): Observable<any> {
+    return this.httpClient.put(apiUrl, data).pipe(
+      map((response: Object) => {
+        return response;
+      }),
+      catchError(this.handleError),
+    );
+  }
+
   public deleteData(apiUrl: string): Observable<any> {
     return this.httpClient.delete(apiUrl).pipe(
       map((response: Object) => {
@@ -67,7 +76,7 @@ export class ApiService {
 
   public updateMaterialLot(lot_number: string, data: any): Observable<any> {
     const url = Urls.updateMaterialLot.replace(':lot_number', lot_number);
-    return this.postData(url, data);
+    return this.updateData(url, data);
   }
 
   public deleteMaterialLot(lot_number: string): Observable<any> {
@@ -90,7 +99,7 @@ export class ApiService {
 
   public updateOrder(order_id: string, data: any): Observable<any> {
     let url = Urls.updateOrder.replace(':order_id', order_id);
-    return this.postData(url, data);
+    return this.updateData(url, data);
   }
 
   public deleteOrder(order_id: string): Observable<any> {

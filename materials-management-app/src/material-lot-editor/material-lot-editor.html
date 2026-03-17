@@ -1,3 +1,17 @@
+<div class="box large">
+  <h1>Material Lot Editor</h1>
+</div>
+<div class="box medium">
+  <p *ngIf="materialLotSuccessMessage$ | async" class="success-message">
+    {{ materialLotSuccessMessage$ | async }}
+  </p>
+</div>
+/* display error message */
+<div class="box medium">
+  <p *ngIf="materialLotError$ | async" class="error-message">
+    {{ materialLotError$ | async }}
+  </p>
+</div>
 <div class="box small">
   <form [formGroup]="materialLotForm">
     <label for="material_id">Material ID:</label>
@@ -32,6 +46,7 @@
     >
       <td>{{ materialLot.lot_number }}</td>
       <td>{{ materialLot.material_id }}</td>
+      <td><input type="button" value="Delete" (click)="onDelete(materialLot)" /></td>
     </tr>
   </table>
 </div>
