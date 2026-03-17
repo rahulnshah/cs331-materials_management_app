@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -21,6 +21,8 @@ import { PurchaseOrder } from '../../models/model';
 
 @Injectable()
 export class PurchaseOrderEffects {
+  private apiService: ApiService = inject(ApiService);
+  private actions$: Actions = inject(Actions);
   loadPurchaseOrders$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadPurchaseOrders),
@@ -85,8 +87,4 @@ export class PurchaseOrderEffects {
       ),
     ),
   );
-  constructor(
-    private actions$: Actions,
-    private apiService: ApiService,
-  ) {}
 }

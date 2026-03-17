@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -22,12 +22,14 @@ import { MaterialLot } from '../../models/model';
 
 @Injectable()
 export class MaterialLotEffects {
+  private apiService: ApiService = inject(ApiService);
+  private actions$: Actions = inject(Actions);
   loadMaterialLots$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadMaterialLots),
       switchMap(() =>
         this.apiService.getMaterialLots().pipe(
-          map((response: MaterialLot[]) => loadMaterialLotsSuccess({ materialLots: response })),
+          map((response: any) => loadMaterialLotsSuccess({ materialLots: response.message })),
           catchError((error: Error) => of(loadMaterialLotsFailure({ error: error.message }))),
         ),
       ),
@@ -90,9 +92,4 @@ export class MaterialLotEffects {
       ),
     ),
   );
-
-  constructor(
-    private actions$: Actions,
-    private apiService: ApiService,
-  ) {}
 }

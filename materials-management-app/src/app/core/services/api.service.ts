@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Urls } from '../config/urls';
 import { MaterialLot, PurchaseOrder } from '../../models/model';
@@ -8,7 +8,7 @@ import { MaterialLot, PurchaseOrder } from '../../models/model';
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient: HttpClient = inject(HttpClient);
 
   public getData(apiUrl: string): Observable<any> {
     return this.httpClient.get(apiUrl).pipe(
@@ -21,6 +21,15 @@ export class ApiService {
 
   public postData(apiUrl: string, data: any): Observable<any> {
     return this.httpClient.post(apiUrl, data).pipe(
+      map((response: Object) => {
+        return response;
+      }),
+      catchError(this.handleError),
+    );
+  }
+
+  public updateData(apiUrl: string, data: any): Observable<any> {
+    return this.httpClient.put(apiUrl, data).pipe(
       map((response: Object) => {
         return response;
       }),
@@ -47,11 +56,11 @@ export class ApiService {
     });
   }
 
-  public getMaterialLots(): Observable<MaterialLot[]> {
+  public getMaterialLots() {
     return this.getData(Urls.getMaterialLots);
   }
 
-  public getMaterialLot(lot_number: string): Observable<MaterialLot> {
+  public getMaterialLot(lot_number: string) {
     const url = Urls.getMaterialLot.replace(':lot_number', lot_number);
     return this.getData(url);
   }
@@ -67,7 +76,7 @@ export class ApiService {
 
   public updateMaterialLot(lot_number: string, data: any): Observable<any> {
     const url = Urls.updateMaterialLot.replace(':lot_number', lot_number);
-    return this.postData(url, data);
+    return this.updateData(url, data);
   }
 
   public deleteMaterialLot(lot_number: string): Observable<any> {
@@ -75,7 +84,7 @@ export class ApiService {
     return this.deleteData(url);
   }
 
-  public getOrders(): Observable<PurchaseOrder[]> {
+  public getOrders() {
     return this.getData(Urls.getOrders);
   }
 
@@ -83,14 +92,14 @@ export class ApiService {
     return this.postData(Urls.addOrder, data);
   }
 
-  public getOrder(order_id: string): Observable<PurchaseOrder> {
+  public getOrder(order_id: string) {
     let url = Urls.getOrder.replace(':order_id', order_id.toString());
     return this.getData(url);
   }
 
   public updateOrder(order_id: string, data: any): Observable<any> {
     let url = Urls.updateOrder.replace(':order_id', order_id);
-    return this.postData(url, data);
+    return this.updateData(url, data);
   }
 
   public deleteOrder(order_id: string): Observable<any> {
