@@ -1,0 +1,77 @@
+<div class="box large">
+  <h1>Purchase Order Editor</h1>
+</div>
+<div class="box medium">
+  <p *ngIf="purchaseOrderSuccessMessage$ | async" class="success-message">
+    {{ purchaseOrderSuccessMessage$ | async }}
+  </p>
+</div>
+/* display error message */
+<div class="box medium">
+  <p *ngIf="purchaseOrderError$ | async" class="error-message">
+    {{ purchaseOrderError$ | async }}
+  </p>
+</div>
+<div class="box large">
+  <form [formGroup]="purchaseOrderForm" id="orders_form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" formControlName="name" />
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" formControlName="quantity" />
+
+    <label for="unit_price">Unit Price:</label>
+    <input
+      type="number"
+      step="0.01"
+      id="unit_price"
+      name="unit_price"
+      formControlName="unit_price"
+    />
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" formControlName="name" />
+
+    <label for="shipping_address">Shipping Address:</label>
+    <input
+      type="text"
+      id="shipping_address"
+      name="shipping_address"
+      formControlName="shipping_address"
+    />
+
+    <label for="order_date">Order Date:</label>
+    <input type="date" id="order_date" name="order_date" formControlName="order_date" />
+    <input type="submit" id="submitButton" value="Submit" (click)="onSubmit()" />
+    <input
+      type="button"
+      id="updateButton"
+      class="custom-button"
+      value="Update"
+      (click)="onUpdate()"
+    />
+  </form>
+</div>
+<div class="box xlarge">
+  <table id="orders_table">
+    <tr
+      *ngFor="let purchaseOrder of purchaseOrders$ | async"
+      (click)="onSelectPurchaseOrder(purchaseOrder)"
+    >
+      <td>{{ purchaseOrder.lot_number }}</td>
+      <td>{{ purchaseOrder.name }}</td>
+      <td>{{ purchaseOrder.quantity }}</td>
+      <td>{{ purchaseOrder.unit_price }}</td>
+      <td>{{ purchaseOrder.shipping_address }}</td>
+      <td>{{ purchaseOrder.order_date }}</td>
+      <td>
+        <input
+          type="button"
+          value="Delete"
+          class="custom-button"
+          (click)="onDelete(purchaseOrder)"
+        />
+      </td>
+    </tr>
+  </table>
+</div>

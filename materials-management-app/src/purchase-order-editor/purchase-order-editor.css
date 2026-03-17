@@ -39,7 +39,7 @@
     margin-top: 10px;
   }
   
-.custom-button {
+button, .custom-button {
     background-color: #4CAF50; /* Background color */
     color: white; /* Text color */
     padding: 10px 20px; /* Padding */

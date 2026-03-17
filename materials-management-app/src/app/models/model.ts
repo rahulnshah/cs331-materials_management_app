@@ -2,8 +2,8 @@ export interface PurchaseOrder {
   order_id: string;
   name: string;
   lot_number: string;
-  quantity: number;
-  unit_price: number;
+  quantity: string;
+  unit_price: string;
   order_date: string;
   shipping_address: string;
 }

@@ -11,14 +11,16 @@ import { materialLotReducer } from './store/material-lots/material-lot.reducer';
 import { MaterialLotEffects } from './store/material-lots/material-lot.effects';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http'; // Import provideHttpClient
+import { purchaseOrderReducer } from './store/purchase-orders/purchase-order.reducer';
+import { PurchaseOrderEffects } from './store/purchase-orders/purchase-order.efffects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore({ materialLots: materialLotReducer }),
-    provideEffects([MaterialLotEffects]),
+    provideStore({ materialLots: materialLotReducer, purchaseOrders: purchaseOrderReducer }),
+    provideEffects([MaterialLotEffects, PurchaseOrderEffects]),
     provideHttpClient(), // Add provideHttpClient to the providers array
   ],
 };
