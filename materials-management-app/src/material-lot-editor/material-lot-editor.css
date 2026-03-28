@@ -3,6 +3,12 @@
     font-weight: bold;
     margin-bottom: 10px;
   }
+
+  .error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
   
   .box {
     border-radius: 10px;
@@ -33,10 +39,10 @@
   .box input[type="submit"] {
     background-color: #048ff9; /* Background color */
     color: white; /* Text color */
-    border: none;
-    cursor: pointer;
-    align-self: flex-end;
-    margin-top: 10px;
+    padding: 10px 20px; /* Padding */
+    border: none; /* Remove border */
+    cursor: pointer; /* Cursor style */
+    border-radius: 5px; /* Rounded corners */
   }
   
 .custom-button {

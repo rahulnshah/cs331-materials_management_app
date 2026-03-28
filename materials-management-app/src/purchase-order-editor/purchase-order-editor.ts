@@ -60,7 +60,7 @@ export class PurchaseOrderEditor {
     this.purchaseOrderStore.dispatch(
       addPurchaseOrder({
         purchaseOrder: {
-          lot_number: this.purchaseOrderForm.value.lot_number!,
+          lot_number: this.lot_number,
           name: this.purchaseOrderForm.value.name!,
           shipping_address: this.purchaseOrderForm.value.shipping_address!,
           quantity: this.purchaseOrderForm.value.quantity!,
