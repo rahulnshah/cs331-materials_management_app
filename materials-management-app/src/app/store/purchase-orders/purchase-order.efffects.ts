@@ -28,7 +28,10 @@ export class PurchaseOrderEffects {
       ofType(loadPurchaseOrders),
       switchMap((action: ReturnType<typeof loadPurchaseOrders>) =>
         this.apiService.getMaterialLotOrders(action.lot_number).pipe(
-          map((response: any) => loadPurchaseOrdersSuccess({ purchaseOrders: response.message })),
+          map((response: any) => {
+            console.log('API Response:', response.message); // Debug log
+            return loadPurchaseOrdersSuccess({ purchaseOrders: response.message });
+          }),
           catchError((error: Error) => of(loadPurchaseOrdersFailure({ error: error.message }))),
         ),
       ),
