@@ -1,14 +1,10 @@
-<div class="box large">
-  <h1>Material Lot Editor</h1>
-</div>
-<div class="box medium">
-  <p *ngIf="materialLotSuccessMessage$ | async" class="success-message">
+<div *ngIf="materialLotSuccessMessage$ | async" class="box medium">
+  <p class="success-message">
     {{ materialLotSuccessMessage$ | async }}
   </p>
 </div>
-/* display error message */
-<div class="box medium">
-  <p *ngIf="materialLotError$ | async" class="error-message">
+<div *ngIf="materialLotError$ | async" class="box medium">
+  <p class="error-message">
     {{ materialLotError$ | async }}
   </p>
 </div>

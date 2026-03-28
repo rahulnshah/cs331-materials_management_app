@@ -1,14 +1,10 @@
-<div class="box large">
-  <h1>Purchase Order Editor</h1>
-</div>
-<div class="box medium">
-  <p *ngIf="purchaseOrderSuccessMessage$ | async" class="success-message">
+<div *ngIf="purchaseOrderSuccessMessage$ | async" class="box medium">
+  <p class="success-message">
     {{ purchaseOrderSuccessMessage$ | async }}
   </p>
 </div>
-/* display error message */
-<div class="box medium">
-  <p *ngIf="purchaseOrderError$ | async" class="error-message">
+<div *ngIf="purchaseOrderError$ | async" class="box medium">
+  <p class="error-message">
     {{ purchaseOrderError$ | async }}
   </p>
 </div>

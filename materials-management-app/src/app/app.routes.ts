@@ -4,5 +4,5 @@ import { MaterialLotEditor } from '../material-lot-editor/material-lot-editor';
 
 export const routes: Routes = [
   { path: 'orders/:lot_number', component: PurchaseOrderEditor, title: 'Purchase Orders' },
-  { path: '', component: MaterialLotEditor, pathMatch: 'full' },
+  { path: '', component: MaterialLotEditor, pathMatch: 'full', title: 'Material Lots' },
 ];
