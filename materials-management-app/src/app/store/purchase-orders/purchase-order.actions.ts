@@ -1,6 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { PurchaseOrder } from '../../models/model';
-export const loadPurchaseOrders = createAction('[Purchase Order] Load Purchase Orders');
+export const loadPurchaseOrders = createAction(
+  '[Purchase Order] Load Purchase Orders',
+  props<{ lot_number: string }>(),
+);
 
 export const loadPurchaseOrdersSuccess = createAction(
   '[Purchase Order] Load Purchase Orders Success',
@@ -24,7 +27,7 @@ export const addPurchaseOrder = createAction(
 
 export const addPurchaseOrderSuccess = createAction(
   '[Purchase Order] Add Purchase Order Success',
-  props<{ purchaseOrder: PurchaseOrder; successMessage: string }>(),
+  props<{ purchaseOrder: PurchaseOrder; successMessage: string; inserted_order_id: string }>(),
 );
 
 export const addPurchaseOrderFailure = createAction(

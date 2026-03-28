@@ -16,6 +16,7 @@ import {
   selectMaterialLotSuccessMessage,
   selectSelectedMaterialLot,
 } from '../app/store/material-lots/material-lot.selectors';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-material-lot-editor',
@@ -27,6 +28,7 @@ import {
 export class MaterialLotEditor implements OnInit {
   private formBuilder = inject(FormBuilder);
   private materialLotStore = inject(Store);
+  private router = inject(Router);
 
   // Initialize the form with values of selected material lot or empty values for new lot
   materialLotForm = this.formBuilder.group({
@@ -84,5 +86,10 @@ export class MaterialLotEditor implements OnInit {
   onDelete(materialLot: MaterialLot) {
     // Implement delete functionality here
     this.materialLotStore.dispatch(deleteMaterialLot({ lot_number: materialLot.lot_number }));
+  }
+
+  onViewOrders(materialLot: MaterialLot) {
+    // Implement view orders functionality here - navigate to orders page with lot_number as parameter
+    this.router.navigate(['/orders', materialLot.lot_number]);
   }
 }
