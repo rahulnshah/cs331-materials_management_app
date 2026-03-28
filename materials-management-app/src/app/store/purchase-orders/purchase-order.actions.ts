@@ -27,7 +27,7 @@ export const addPurchaseOrder = createAction(
 
 export const addPurchaseOrderSuccess = createAction(
   '[Purchase Order] Add Purchase Order Success',
-  props<{ purchaseOrder: PurchaseOrder; successMessage: string }>(),
+  props<{ purchaseOrder: PurchaseOrder; successMessage: string; inserted_order_id: string }>(),
 );
 
 export const addPurchaseOrderFailure = createAction(

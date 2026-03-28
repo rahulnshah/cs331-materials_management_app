@@ -60,7 +60,6 @@ export class PurchaseOrderEditor {
     this.purchaseOrderStore.dispatch(
       addPurchaseOrder({
         purchaseOrder: {
-          order_id: this.purchaseOrderForm.value.order_id!,
           lot_number: this.purchaseOrderForm.value.lot_number!,
           name: this.purchaseOrderForm.value.name!,
           shipping_address: this.purchaseOrderForm.value.shipping_address!,
@@ -90,7 +89,7 @@ export class PurchaseOrderEditor {
   }
 
   onDelete(purchaseOrder: PurchaseOrder) {
-    this.purchaseOrderStore.dispatch(deletePurchaseOrder({ order_id: purchaseOrder.order_id }));
+    this.purchaseOrderStore.dispatch(deletePurchaseOrder({ order_id: purchaseOrder.order_id! }));
   }
 
   ngOnInit() {

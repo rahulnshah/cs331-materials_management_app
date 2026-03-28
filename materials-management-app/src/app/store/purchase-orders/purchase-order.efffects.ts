@@ -46,6 +46,7 @@ export class PurchaseOrderEffects {
           map((response) =>
             addPurchaseOrderSuccess({
               successMessage: response.message,
+              inserted_order_id: response.inserted_order_id,
               purchaseOrder: action.purchaseOrder,
             }),
           ),

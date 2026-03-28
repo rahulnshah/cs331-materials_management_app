@@ -50,7 +50,10 @@ export const purchaseOrderReducer = createReducer(
   })),
   on(addPurchaseOrderSuccess, (state, action) => ({
     ...state,
-    purchaseOrders: [...state.purchaseOrders, action.purchaseOrder],
+    purchaseOrders: [
+      ...state.purchaseOrders,
+      { ...action.purchaseOrder, order_id: action.inserted_order_id },
+    ],
     loading: false,
     successMessage: action.successMessage,
   })),

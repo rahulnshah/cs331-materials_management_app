@@ -1,5 +1,5 @@
 export interface PurchaseOrder {
-  order_id: string;
+  order_id?: string;
   name: string;
   lot_number: string;
   quantity: string;
