@@ -21,6 +21,8 @@ import {
 } from '../app/store/purchase-orders/purchase-order.selectors';
 import { PurchaseOrder } from '../app/models/model';
 import { ActivatedRoute } from '@angular/router';
+import { DataShareService } from '../app/core/services/data-share.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-purchase-order-editor',
@@ -33,6 +35,10 @@ export class PurchaseOrderEditor {
   private formBuilder = inject(FormBuilder);
   private purchaseOrderStore = inject(Store);
   private activatedRoute = inject(ActivatedRoute);
+  private dataShareService = inject(DataShareService);
+  private destroy$: Subject<void> = new Subject<void>();
+
+  alertMessage = '';
 
   lot_number = '';
 
@@ -57,6 +63,9 @@ export class PurchaseOrderEditor {
   }
 
   onSubmit() {
+    this.dataShareService.setData(
+      'Form Submitted with values: ' + JSON.stringify(this.purchaseOrderForm.value),
+    );
     this.purchaseOrderStore.dispatch(
       addPurchaseOrder({
         purchaseOrder: {
@@ -72,6 +81,10 @@ export class PurchaseOrderEditor {
   }
 
   onUpdate() {
+    this.dataShareService.setData(
+      'Update Button Clicked for Order ID: ' + this.purchaseOrderForm.value.order_id!,
+    );
+
     this.purchaseOrderStore.dispatch(
       updatePurchaseOrder({
         order_id: this.purchaseOrderForm.value.order_id!,
@@ -89,10 +102,18 @@ export class PurchaseOrderEditor {
   }
 
   onDelete(purchaseOrder: PurchaseOrder) {
+    this.dataShareService.setData('Delete Button Clicked for Order ID: ' + purchaseOrder.order_id!);
     this.purchaseOrderStore.dispatch(deletePurchaseOrder({ order_id: purchaseOrder.order_id! }));
   }
 
   ngOnInit() {
+    // show alert message when purchase order is added, updated or deleted successfully
+    this.dataShareService.sharingData$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
+      this.alertMessage = data.sharedData;
+      setTimeout(() => {
+        this.alertMessage = '';
+      }, 3000);
+    });
     // get the lot_number from the url
     console.log('Activated Route Snapshot:', this.activatedRoute.snapshot);
     this.lot_number = this.activatedRoute.snapshot.params['lot_number'];
@@ -112,5 +133,10 @@ export class PurchaseOrderEditor {
         this.purchaseOrderForm.reset();
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

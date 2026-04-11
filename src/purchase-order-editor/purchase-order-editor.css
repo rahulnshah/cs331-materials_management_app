@@ -53,3 +53,9 @@ button, .custom-button {
     cursor: pointer; /* Cursor style */
     border-radius: 5px; /* Rounded corners */
 }
+.alert-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}

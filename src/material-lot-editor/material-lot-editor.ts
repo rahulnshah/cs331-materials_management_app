@@ -17,6 +17,8 @@ import {
   selectSelectedMaterialLot,
 } from '../app/store/material-lots/material-lot.selectors';
 import { Router } from '@angular/router';
+import { DataShareService } from '../app/core/services/data-share.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-material-lot-editor',
@@ -29,7 +31,10 @@ export class MaterialLotEditor implements OnInit {
   private formBuilder = inject(FormBuilder);
   private materialLotStore = inject(Store);
   private router = inject(Router);
+  private dataShareService = inject(DataShareService);
+  private destroy$: Subject<void> = new Subject<void>();
 
+  alertMessage = '';
   // Initialize the form with values of selected material lot or empty values for new lot
   materialLotForm = this.formBuilder.group({
     lot_number: [''],
@@ -53,6 +58,17 @@ export class MaterialLotEditor implements OnInit {
         this.materialLotForm.reset();
       }
     });
+    this.dataShareService.sharingData$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
+      this.alertMessage = data.sharedData;
+      setTimeout(() => {
+        this.alertMessage = '';
+      }, 3000);
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onSelectMaterialLot(materialLot: MaterialLot) {
@@ -60,6 +76,9 @@ export class MaterialLotEditor implements OnInit {
   }
 
   onUpdate() {
+    this.dataShareService.setData(
+      'Update Button Clicked for Lot Number: ' + this.materialLotForm.value.lot_number!,
+    );
     this.materialLotStore.dispatch(
       updateMaterialLot({
         lot_number: this.materialLotForm.value.lot_number!,
@@ -73,6 +92,9 @@ export class MaterialLotEditor implements OnInit {
 
   onSubmit() {
     console.log('Material Lot Form Submitted', this.materialLotForm.value);
+    this.dataShareService.setData(
+      'Form Submitted with values: ' + JSON.stringify(this.materialLotForm.value),
+    );
     this.materialLotStore.dispatch(
       addMaterialLot({
         materialLot: {
@@ -84,6 +106,9 @@ export class MaterialLotEditor implements OnInit {
   }
 
   onDelete(materialLot: MaterialLot) {
+    this.dataShareService.setData(
+      'Delete Button Clicked for Lot Number: ' + materialLot.lot_number,
+    );
     // Implement delete functionality here
     this.materialLotStore.dispatch(deleteMaterialLot({ lot_number: materialLot.lot_number }));
   }
