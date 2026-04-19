@@ -1,3 +1,11 @@
+export interface Address {
+  street: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  country: string;
+}
+
 export interface PurchaseOrder {
   order_id?: string;
   name: string;
@@ -5,7 +13,7 @@ export interface PurchaseOrder {
   quantity: string;
   unit_price: string;
   order_date: string;
-  shipping_address: string;
+  shipping_address: Address;
 }
 
 export interface MaterialLot {
